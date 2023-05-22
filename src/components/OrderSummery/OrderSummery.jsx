@@ -20,10 +20,10 @@ const OrderSummery = () => {
 				<h2>Grand Total: $</h2>
 			</div>
 			<div className='text-white mt-5 space-y-3'>
-				<button className='w-full p-3 bg-[#ff3030] rounded-md'>
+				<button className='w-full p-3 bg-[#ff3030] rounded-md duration-300 hover:bg-[#ff9900]'>
 					Clear Cart <FontAwesomeIcon icon={faTrashCan} />
 				</button>
-				<button className='w-full p-3 bg-[#ff9900] rounded-md'>
+				<button className='w-full p-3 bg-[#ff9900] rounded-md duration-300 hover:bg-[hsl(36,100%,65%)]'>
 					Review Order <FontAwesomeIcon icon={faArrowRight} />
 				</button>
 			</div>

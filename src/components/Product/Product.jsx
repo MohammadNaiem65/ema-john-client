@@ -21,7 +21,7 @@ const Product = ({ product }) => {
 					</p>
 				</div>
 			</div>
-			<button className='w-full bg-[#FFE0B3] p-2 font-semibold border-t-2 absolute bottom-0 left-0 rounded-b-lg'>
+			<button className='w-full bg-[#FFE0B3] p-2 font-semibold border-t-2 absolute bottom-0 left-0 rounded-b-lg duration-300 hover:bg-[hsl(36,100%,65%)]'>
 				Add To Cart <FontAwesomeIcon icon={faCartPlus} />
 			</button>
 		</div>
