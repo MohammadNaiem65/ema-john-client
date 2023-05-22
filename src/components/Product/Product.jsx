@@ -6,7 +6,7 @@ const Product = ({ product }) => {
 	console.log(product);
 	const { img, name, price, seller, ratings } = product;
 	return (
-		<div className='h-[31.75rem] p-1 border-2 rounded-lg relative flex flex-col space-y-2'>
+		<div className='h-[31.75rem] p-1 border-2 rounded-lg relative flex flex-col space-y-2 duration-300 cursor-pointer  hover:scale-105 hover:shadow-xl'>
 			<img className='h-[17.875rem] w-full rounded-lg' src={img} alt='' />
 			<div className='h-[10rem] p-2 flex flex-col justify-between'>
 				<div>
