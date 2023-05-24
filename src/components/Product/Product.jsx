@@ -2,7 +2,7 @@ import { faCartPlus, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
-const Product = ({ product, manageOrderProcess }) => {
+const Product = ({ product, handleCart }) => {
 	const { img, name, price, seller, ratings, id } = product;
 	return (
 		<div className='h-[31.75rem] p-1 border-2 rounded-lg relative flex flex-col space-y-2 duration-300 cursor-pointer  hover:scale-105 hover:shadow-xl'>
@@ -21,7 +21,7 @@ const Product = ({ product, manageOrderProcess }) => {
 				</div>
 			</div>
 			<button
-				onClick={() => manageOrderProcess(id)}
+				onClick={() => handleCart(id)}
 				className='w-full bg-[#FFE0B3] p-2 font-semibold border-t-2 absolute bottom-0 left-0 rounded-b-lg duration-300 cursor-pointer hover:bg-[hsl(36,100%,65%)]'>
 				Add To Cart <FontAwesomeIcon icon={faCartPlus} />
 			</button>
