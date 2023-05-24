@@ -3,24 +3,27 @@ import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import Products from "./components/Products/Products.jsx";
 import OrderReview from "./components/OrderReview/OrderReview.jsx";
 import Login from "./components/Login/Login.jsx";
 import Inventory from "./components/Inventory/Inventory.jsx";
-import Home from "./components/Home/Home.jsx";
+import Shop from "./components/Shop/Shop.jsx";
+import ErrorPage from "./components/ErrorPage/ErrorPage.jsx";
 
 const routes = createBrowserRouter([
 	{
 		path: "/",
 		element: <App />,
+		errorElement: <ErrorPage />,
 		children: [
 			{
 				path: "/",
-				element: <Home />,
+				element: <Shop />,
+				loader: () => fetch("products.json"),
 			},
 			{
 				path: "/order",
-				element: <Home />,
+				element: <Shop />,
+				loader: () => fetch("products.json"),
 			},
 			{
 				path: "/order-review",

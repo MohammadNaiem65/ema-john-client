@@ -1,19 +1,17 @@
-import {
-	faArrowRight,
-	faTrash,
-	faTrashCan,
-} from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import { showOrderSummery } from "../../utilities/handleOrderProcess";
 
-const OrderSummery = () => {
+const OrderSummery = ({ containerStyles, quantity }) => {
+	showOrderSummery();
 	return (
-		<div className='w-1/5 h-[100dvh] p-5 bg-[#FFE0B3] sticky top-0 right-0 space-y-10 '>
+		<div className={containerStyles}>
 			<h1 className='text-3xl mt-10 pb-3 text-center font-semibold'>
 				Order Summery
 			</h1>
 			<div className='text-lg leading-8'>
-				<p>Selected Items: </p>
+				<p>Selected Items: {quantity}</p>
 				<p>Total Price: $</p>
 				<p>Total Shipping Charge: $</p>
 				<p>Tax: $</p>
