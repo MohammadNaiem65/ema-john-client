@@ -1,8 +1,9 @@
 import { faArrowRight, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import { Link } from "react-router-dom";
 
-const OrderSummery = ({ containerStyles, cart }) => {
+const OrderSummery = ({ containerStyles, cart, btnTitle, btnLocation }) => {
 	let quantity = 0;
 	let totalPrice = 0;
 	let shippingCharge = 0;
@@ -15,8 +16,6 @@ const OrderSummery = ({ containerStyles, cart }) => {
 
 	const tax = totalPrice * 0.05;
 	const grandTotal = totalPrice + shippingCharge + tax;
-
-	console.log(cart);
 
 	return (
 		<div className={containerStyles}>
@@ -36,9 +35,11 @@ const OrderSummery = ({ containerStyles, cart }) => {
 				<button className='w-full p-3 bg-[#ff3030] rounded-md duration-300 hover:bg-[#ff9900]'>
 					Clear Cart <FontAwesomeIcon icon={faTrashCan} />
 				</button>
-				<button className='w-full p-3 bg-[#ff9900] rounded-md duration-300 hover:bg-[hsl(36,100%,65%)]'>
-					Review Order <FontAwesomeIcon icon={faArrowRight} />
-				</button>
+				<Link
+					to={btnLocation}
+					className='w-full p-3 bg-[#ff9900] rounded-md inline-block text-center duration-300 hover:bg-[hsl(36,100%,65%)]'>
+					{btnTitle} <FontAwesomeIcon icon={faArrowRight} />
+				</Link>
 			</div>
 		</div>
 	);

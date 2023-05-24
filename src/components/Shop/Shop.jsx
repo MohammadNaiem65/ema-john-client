@@ -57,6 +57,8 @@ const Shop = () => {
 					"w-1/5 h-[100dvh] p-5 bg-[#FFE0B3] sticky top-0 right-0 space-y-10"
 				}
 				cart={cart}
+				btnTitle={"Review Order"}
+				btnLocation={"/order-review"}
 			/>
 		</div>
 	);
