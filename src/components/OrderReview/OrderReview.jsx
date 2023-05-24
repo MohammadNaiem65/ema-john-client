@@ -8,10 +8,10 @@ const OrderReview = () => {
 
 	const products = useLoaderData();
 	const [cart, setCart] = useState([]);
+	const storedCart = JSON.parse(localStorage.getItem("cart"));
 
 	useEffect(() => {
 		let tempCart = [];
-		const storedCart = JSON.parse(localStorage.getItem("cart"));
 		for (const id in storedCart) {
 			const chosenProduct = products.find((product) => product.id === id);
 			if (chosenProduct) {
@@ -26,7 +26,6 @@ const OrderReview = () => {
 		const remaining = cart.filter((cartItem) => cartItem.id !== id);
 		setCart(remaining);
 
-		const storedCart = JSON.parse(localStorage.getItem("cart"));
 		if (id in storedCart) {
 			delete storedCart[id];
 			localStorage.setItem("cart", JSON.stringify(storedCart));
@@ -46,6 +45,7 @@ const OrderReview = () => {
 			</div>
 			<OrderSummery
 				cart={cart}
+				setCart={setCart}
 				containerStyles={containerStyles}
 				btnTitle={"Proceed Checkout"}
 				btnLocation={"/"}

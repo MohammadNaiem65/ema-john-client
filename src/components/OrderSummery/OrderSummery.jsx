@@ -3,7 +3,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Link } from "react-router-dom";
 
-const OrderSummery = ({ containerStyles, cart, btnTitle, btnLocation }) => {
+const OrderSummery = ({
+	containerStyles,
+	cart,
+	setCart,
+	btnTitle,
+	btnLocation,
+}) => {
 	let quantity = 0;
 	let totalPrice = 0;
 	let shippingCharge = 0;
@@ -16,6 +22,11 @@ const OrderSummery = ({ containerStyles, cart, btnTitle, btnLocation }) => {
 
 	const tax = totalPrice * 0.05;
 	const grandTotal = totalPrice + shippingCharge + tax;
+
+	const clearCart = () => {
+		localStorage.removeItem("cart");
+		setCart([]);
+	};
 
 	return (
 		<div className={containerStyles}>
@@ -32,7 +43,9 @@ const OrderSummery = ({ containerStyles, cart, btnTitle, btnLocation }) => {
 				</h2>
 			</div>
 			<div className='text-white mt-5 space-y-3'>
-				<button className='w-full p-3 bg-[#ff3030] rounded-md duration-300 hover:bg-[#ff9900]'>
+				<button
+					className='w-full p-3 bg-[#ff3030] rounded-md duration-300 hover:bg-[#ff9900]'
+					onClick={clearCart}>
 					Clear Cart <FontAwesomeIcon icon={faTrashCan} />
 				</button>
 				<Link

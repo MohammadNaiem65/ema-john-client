@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
 const CartItem = ({ cartItem, removeCartItem }) => {
-	const { img, name, price, shipping, id } = cartItem;
+	const { img, name, price, quantity, id } = cartItem;
 	return (
 		<div className='w-4/5 p-5 border-2 grid grid-cols-5 rounded-lg'>
 			<img className='w-24 h-24 rounded-lg' src={img} alt='' />
@@ -14,7 +14,7 @@ const CartItem = ({ cartItem, removeCartItem }) => {
 						Price: <span className='text-[#FFD700]'>${price}</span>
 					</p>
 					<p>
-						Shipping Charge: <span className='text-[#FFD700]'>${shipping}</span>
+						Quantity: <span className='text-[#FFD700]'>{quantity}</span>
 					</p>
 				</div>
 				<p
