@@ -11,7 +11,7 @@ const SignUp = () => {
 	const [confirmPasswordBlur, setConfirmPasswordBlur] = useState(true);
 	const [hide, setHide] = useState(true);
 	const [error, setError] = useState("");
-	const { createUser } = useContext(AuthContext);
+	const { createUser, user, setUser } = useContext(AuthContext);
 
 	const handleBlur = (e) => {
 		if (e.target.value !== "") return;
@@ -32,12 +32,38 @@ const SignUp = () => {
 		const email = e.target.email.value;
 		const password = e.target.password.value;
 		const confirmPassword = e.target.confirmPassword.value;
+
+		// Validate the password
 		if (password !== confirmPassword) {
 			return setError("Password did not matched!");
+		} else if (password.length < 8) {
+			return setError("Password must be at least 8 character or long!");
+		} else if (!/(?=.*[a-z])(?=.*[A-Z])/.test(password)) {
+			console.log(password);
+			return setError("password should contain one capital and small letter");
+		} else if (/^\D*$/.test(password)) {
+			return setError("password should contain one digit");
+		} else if (!/(?=.*[\W_])/.test(password)) {
+			return setError("password should contain one special character");
 		}
-		console.log(email, password, confirmPassword);
+
+		// Create user with Email and Password
+		createUser(email, password)
+			.then((userCredential) => {
+				// Signed in
+				const newUser = userCredential.user;
+				setUser(newUser);
+				// ...
+			})
+			.catch((error) => {
+				const errorCode = error.code;
+				const errorMessage = error.message;
+				setError(errorMessage);
+			});
 		e.target.reset();
 	};
+
+	console.log(user);
 
 	return (
 		<div className='h-[85dvh] grid place-items-center'>
@@ -46,7 +72,9 @@ const SignUp = () => {
 				style={{ boxShadow: "-10px 10px #FFE0B3" }}>
 				<h1 className='text-3xl text-center'>Sign Up</h1>
 				{/* Main form container */}
-				<form className='space-y-8' onSubmit={createUserWithEmail}>
+				<form
+					className={error ? "space-y-5" : "space-y-8"}
+					onSubmit={createUserWithEmail}>
 					<div>
 						<div className='space-y-7'>
 							<div className='form-control h-10 relative flex items-center'>
