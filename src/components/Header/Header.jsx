@@ -1,6 +1,7 @@
 import React from "react";
 import Logo from "../../assets/images/Logo.svg";
 import { Link } from "react-router-dom";
+
 const Header = () => {
 	return (
 		<nav className='bg-[#1C2B35] w-full h-28 text-white flex justify-between items-center px-20'>

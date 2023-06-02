@@ -1,20 +1,44 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../contexts/providers/AuthProvider";
 import googleImage from "../../assets/images/google.png";
+import lockedEnvelop from "../../assets/images/locked-envelop.png";
+import unlockedEnvelop from "../../assets/images/unlocked-envelop.png";
 
 const SignUp = () => {
 	const [emailBlur, setEmailBlur] = useState(true);
 	const [passwordBlur, setPasswordBlur] = useState(true);
 	const [confirmPasswordBlur, setConfirmPasswordBlur] = useState(true);
+	const [hide, setHide] = useState(true);
+	const [error, setError] = useState("");
+	const { createUser } = useContext(AuthContext);
 
 	const handleBlur = (e) => {
 		if (e.target.value !== "") return;
 		else if (e.target.name === "email") setEmailBlur(!emailBlur);
 		else if (e.target.name === "password") setPasswordBlur(!passwordBlur);
-		else if (e.target.name === "confirm-password") {
+		else {
 			setConfirmPasswordBlur(!confirmPasswordBlur);
 		}
 	};
+
+	const handleVisibility = () => {
+		setHide(!hide);
+	};
+
+	const createUserWithEmail = (e) => {
+		e.preventDefault();
+		setError("");
+		const email = e.target.email.value;
+		const password = e.target.password.value;
+		const confirmPassword = e.target.confirmPassword.value;
+		if (password !== confirmPassword) {
+			return setError("Password did not matched!");
+		}
+		console.log(email, password, confirmPassword);
+		e.target.reset();
+	};
+
 	return (
 		<div className='h-[85dvh] grid place-items-center'>
 			<div
@@ -22,60 +46,79 @@ const SignUp = () => {
 				style={{ boxShadow: "-10px 10px #FFE0B3" }}>
 				<h1 className='text-3xl text-center'>Sign Up</h1>
 				{/* Main form container */}
-				<form className='space-y-8'>
-					<div className='form-control h-10 relative flex items-center'>
-						<label
-							htmlFor='email'
-							className={`ml-2 absolute ${
-								emailBlur ? "top-1 text-lg" : "-top-6"
-							} duration-300 z-0`}>
-							Email
-						</label>
-						<input
-							onFocus={handleBlur}
-							onBlur={handleBlur}
-							type='email'
-							name='email'
-							className='w-full h-full py-1 px-2 border-2 border-[#95A0A7] outline-none rounded-md z-10'
-							style={{ background: "none" }}
-							required
-						/>
-					</div>
-					<div className='form-control h-10 relative flex items-center'>
-						<label
-							htmlFor='password'
-							className={`ml-2 absolute ${
-								passwordBlur ? "top-1 text-lg" : "-top-6"
-							} duration-300 z-0`}>
-							Password
-						</label>
-						<input
-							onFocus={handleBlur}
-							onBlur={handleBlur}
-							type='password'
-							name='password'
-							className='w-full h-10 py-1 px-2 border-2 border-[#95A0A7] outline-none rounded-md z-10'
-							style={{ background: "none" }}
-							required
-						/>
-					</div>
-					<div className='form-control h-10 relative flex items-center'>
-						<label
-							htmlFor='confirm-password'
-							className={`ml-2 absolute ${
-								confirmPasswordBlur ? "top-1 text-lg" : "-top-6"
-							} duration-300 z-0`}>
-							Confirm Password
-						</label>
-						<input
-							onFocus={handleBlur}
-							onBlur={handleBlur}
-							type='confirm-password'
-							name='confirm-password'
-							className='w-full h-10 py-1 px-2 border-2 border-[#95A0A7] outline-none rounded-md z-10'
-							style={{ background: "none" }}
-							required
-						/>
+				<form className='space-y-8' onSubmit={createUserWithEmail}>
+					<div>
+						<div className='space-y-7'>
+							<div className='form-control h-10 relative flex items-center'>
+								<label
+									htmlFor='email'
+									className={`ml-2 absolute ${
+										emailBlur ? "top-1 text-lg" : "-top-6"
+									} duration-300 z-0`}>
+									Email
+								</label>
+								<input
+									onFocus={handleBlur}
+									onBlur={handleBlur}
+									type='email'
+									name='email'
+									className='w-full h-full py-1 px-2 border-2 border-[#95A0A7] outline-none rounded-md z-10'
+									style={{ background: "none" }}
+									required
+								/>
+							</div>
+							<div className='form-control h-10 relative flex items-center'>
+								<label
+									htmlFor='password'
+									className={`ml-2 absolute ${
+										passwordBlur ? "top-1 text-lg" : "-top-6"
+									} duration-300 z-0`}>
+									Password
+								</label>
+								<input
+									onFocus={handleBlur}
+									onBlur={handleBlur}
+									type={hide ? "password" : "text"}
+									name='password'
+									className='w-full h-10 py-1 px-2 border-2 border-[#95A0A7] outline-none rounded-md z-10'
+									style={{ background: "none" }}
+									required
+								/>
+								<img
+									src={hide ? lockedEnvelop : unlockedEnvelop}
+									alt='Password toggle.'
+									className='w-7 absolute right-2 drop-shadow-xl cursor-pointer z-20'
+									onClick={handleVisibility}
+								/>
+							</div>
+							<div className='form-control h-10 relative flex items-center'>
+								<label
+									htmlFor='confirm-password'
+									className={`ml-2 absolute ${
+										confirmPasswordBlur ? "top-1 text-lg" : "-top-6"
+									} duration-300 z-0`}>
+									Confirm Password
+								</label>
+								<input
+									onFocus={handleBlur}
+									onBlur={handleBlur}
+									type={hide ? "password" : "text"}
+									name='confirmPassword'
+									className='w-full h-10 py-1 px-2 border-2 border-[#95A0A7] outline-none rounded-md z-10'
+									style={{ background: "none" }}
+									required
+								/>
+								<img
+									src={hide ? lockedEnvelop : unlockedEnvelop}
+									alt='Password toggle.'
+									className='w-7 absolute right-2 drop-shadow-xl cursor-pointer z-20'
+									onClick={handleVisibility}
+								/>
+							</div>
+						</div>
+						{error && (
+							<p className='text-red-500 font-semibold mt-1'>{error}</p>
+						)}
 					</div>
 					<div>
 						<button
