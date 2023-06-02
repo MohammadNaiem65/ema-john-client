@@ -8,6 +8,7 @@ import Login from "./components/Login/Login.jsx";
 import Inventory from "./components/Inventory/Inventory.jsx";
 import Shop from "./components/Shop/Shop.jsx";
 import ErrorPage from "./components/ErrorPage/ErrorPage.jsx";
+import SignUp from "./components/SignUp/SignUp.jsx";
 
 const routes = createBrowserRouter([
 	{
@@ -37,6 +38,10 @@ const routes = createBrowserRouter([
 			{
 				path: "/login",
 				element: <Login />,
+			},
+			{
+				path: "/sign-up",
+				element: <SignUp />,
 			},
 		],
 	},
