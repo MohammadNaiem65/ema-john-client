@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/providers/AuthProvider";
 import googleImage from "../../assets/images/google.png";
 import lockedEnvelop from "../../assets/images/locked-envelop.png";
@@ -11,6 +11,10 @@ const Login = () => {
 	const [confirmPasswordBlur, setConfirmPasswordBlur] = useState(true);
 	const [hide, setHide] = useState(true);
 	const [error, setError] = useState("");
+	const { loginUser, setUser } = useContext(AuthContext);
+	const location = useLocation();
+	const from = location.state?.path?.pathname || "/";
+	const navigate = useNavigate();
 
 	const handleBlur = (e) => {
 		if (e.target.value !== "") return;
@@ -25,26 +29,33 @@ const Login = () => {
 		setHide(!hide);
 	};
 
-	const createUserWithEmail = (e) => {
+	const handleLogIn = (e) => {
 		e.preventDefault();
 		setError("");
 		const email = e.target.email.value;
 		const password = e.target.password.value;
-		const confirmPassword = e.target.confirmPassword.value;
-		if (password !== confirmPassword) {
-			return setError("Password did not matched!");
-		}
-		console.log(email, password, confirmPassword);
-		e.target.reset();
+		loginUser(email, password)
+			.then((userCredential) => {
+				// Signed in
+				const user = userCredential.user;
+				setUser(user);
+				navigate(from, { replace: true });
+				e.target.reset();
+			})
+			.catch((error) => {
+				const errorCode = error.code;
+				const errorMessage = error.message;
+				setError(errorMessage);
+			});
 	};
 	return (
 		<div className='h-[85dvh] grid place-items-center'>
 			<div
 				className='w-[27rem] h-[33rem] text-[#2A414F] rounded-md border-2 bg-primary px-11 py-8 flex flex-col justify-between'
 				style={{ boxShadow: "-10px 10px #FFE0B3" }}>
-				<h1 className='text-3xl text-center'>Sign Up</h1>
+				<h1 className='text-3xl text-center'>Login</h1>
 				{/* Main form container */}
-				<form className='space-y-8' onSubmit={createUserWithEmail}>
+				<form className='space-y-8' onSubmit={handleLogIn}>
 					<div>
 						<div className='space-y-9'>
 							<div className='form-control h-10 relative flex items-center'>

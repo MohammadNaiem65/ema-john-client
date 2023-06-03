@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/providers/AuthProvider";
 import googleImage from "../../assets/images/google.png";
 import lockedEnvelop from "../../assets/images/locked-envelop.png";
@@ -12,6 +12,7 @@ const SignUp = () => {
 	const [hide, setHide] = useState(true);
 	const [error, setError] = useState("");
 	const { createUser, user, setUser } = useContext(AuthContext);
+	const navigate = useNavigate();
 
 	const handleBlur = (e) => {
 		if (e.target.value !== "") return;
@@ -26,7 +27,7 @@ const SignUp = () => {
 		setHide(!hide);
 	};
 
-	const createUserWithEmail = (e) => {
+	const handleCreateUserWithEmail = (e) => {
 		e.preventDefault();
 		setError("");
 		const email = e.target.email.value;
@@ -50,20 +51,17 @@ const SignUp = () => {
 		// Create user with Email and Password
 		createUser(email, password)
 			.then((userCredential) => {
-				// Signed in
 				const newUser = userCredential.user;
 				setUser(newUser);
-				// ...
+				navigate("/login", { replace: true });
+				e.target.reset();
 			})
 			.catch((error) => {
 				const errorCode = error.code;
 				const errorMessage = error.message;
 				setError(errorMessage);
 			});
-		e.target.reset();
 	};
-
-	console.log(user);
 
 	return (
 		<div className='h-[85dvh] grid place-items-center'>
@@ -74,7 +72,7 @@ const SignUp = () => {
 				{/* Main form container */}
 				<form
 					className={error ? "space-y-5" : "space-y-8"}
-					onSubmit={createUserWithEmail}>
+					onSubmit={handleCreateUserWithEmail}>
 					<div>
 						<div className='space-y-7'>
 							<div className='form-control h-10 relative flex items-center'>

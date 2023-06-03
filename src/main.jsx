@@ -10,6 +10,7 @@ import Shop from "./components/Shop/Shop.jsx";
 import ErrorPage from "./components/ErrorPage/ErrorPage.jsx";
 import SignUp from "./components/SignUp/SignUp.jsx";
 import AuthProvider from "./contexts/providers/AuthProvider.jsx";
+import PrivateRoute from "./routes/PrivateRoute.jsx";
 
 const routes = createBrowserRouter([
 	{
@@ -29,12 +30,20 @@ const routes = createBrowserRouter([
 			},
 			{
 				path: "/order-review",
-				element: <OrderReview />,
+				element: (
+					<PrivateRoute>
+						<OrderReview />
+					</PrivateRoute>
+				),
 				loader: () => fetch("products.json"),
 			},
 			{
 				path: "/inventory",
-				element: <Inventory />,
+				element: (
+					<PrivateRoute>
+						<Inventory />
+					</PrivateRoute>
+				),
 			},
 			{
 				path: "/login",
